@@ -1,0 +1,131 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/css/materialize.min.css">
+<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js" /></script>
+<link type="text/css" rel="stylesheet" href="css/index.css" />
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+
+<!--navbar-->
+<nav>
+	<div class="nav-wrapper">
+		<a href="#" class="brand-logo right">OTP WEB APP</a>
+
+		<ul class="left">
+			<li><a>Home</a></li>
+			<li><a>Contacts</a></li>
+		</ul>
+	</div>
+</nav>
+<div class="container-fluid" >
+
+<div class="container-fluid">
+<div class="row">
+  <div class="col s12">
+    <ul class="tabs">
+      <li class="tab col s3"><a class="active" href="#contact">Contacts</a></li>
+      <li class="tab col s3"><a href="#msgSent" ng-click="GetReport()">Message Report</a></li>
+    </ul>
+  </div>
+  <div id="contact" class="col s12">
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Action</th>
+				</tr>
+
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in contactsList track by item.phone">
+						<td name="name">{{item.name}}</td>
+						<td name="phone">{{item.phone}}</td>
+						<td name="btn"><a  class="waves-effect waves-light btn modal-trigger" href="#modal1" ng-click="getModal(item)">Send Message</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<div class="row">
+			<div class="col-sm-4">
+
+			</div>
+			<div class="col-sm-4">
+
+			</div>
+
+			<div class="col-sm-4">
+				<a class="waves-effect waves-light btn modal-trigger" href="#contactMail">Add Contact</a>
+			</div>
+
+		</div>
+	</div>
+
+  <div id="msgSent" class="col s12">
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Time</th>
+					<th>OTP</th>
+				</tr>
+
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in contactsList | orderBy : '-time' track by item.phone">
+					<td>{{item.name}}</td>
+					<td>{{item.phone}}</td>
+					<td>{{item.time | date : 'MMM d, y h:mm:ss a'}}</td>
+					<td>{{item.OTP}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+</div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+	<div class="modal-content">
+		<h4>Send OTP</h4>
+		<p>Kisan Network App</p>
+	</div>
+	<div class="modal-footer">
+		<input type="text" ng-model="user.name" readonly="true"/>
+		<input type="text" ng-model="user.phone" readonly="true"/>
+		<input type="text" name="" value="Hi Your OTP is {{user.OTP}}"/>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat" ng-click="sendOTP(user)">Send Message</a>
+	</div>
+</div>
+
+<!-- Modal Structure -->
+<div id="contactMail" class="modal">
+	<div class="modal-content">
+		<h4>Save Contact</h4>
+		<p>Kisan Network App</p>
+	</div>
+	<div class="modal-footer">
+		<input type="text" ng-model="addUser.name"/>
+		<input type="number" ng-model="addUser.phone" ng-keyup="validate(addUser.phone)"/><span id="duplicateNumber" style="color:red"></span>
+		<a class="modal-action modal-close waves-effect waves-green btn-flat" id="createContact" ng-click="AddContact(addUser)" disabled="false">Save Contact</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	 $('.modal').modal();
+});
+
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<script src="js/index.js"></script>
+</html>
