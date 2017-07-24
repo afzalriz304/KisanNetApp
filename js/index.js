@@ -64,9 +64,7 @@ myApp.controller("myController",function($scope,$http){
           "method":"POST",
           "params":params
         }).then(function (response) {
-          if(response.data==='success'){
             $scope.getFileData();
-          }
         })
     }
     $scope.getModal=function (item) {
